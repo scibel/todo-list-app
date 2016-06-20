@@ -39,7 +39,7 @@ Finally, install the app by following these simple instructions, enjoy!
 
 5.	From the root of the project run
 
-	```docker-compose build```
+	```docker-compose build``` &
 	```docker-compose up```
 
 6.  Run DB migrations
