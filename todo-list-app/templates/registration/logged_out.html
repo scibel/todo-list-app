@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    You have been successfully logged out. <br />
+
+    <a href="{% url 'django.contrib.auth.views.login' %}">Login</a>
+
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+    <script type="text/javascript">
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        function markDone(todo_id) {
+            $.ajax({
+                url: "/api/v1/todos/update-mark-done/" + todo_id,
+                method: 'PUT',
+                type: "PUT",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'))
+                },
+                data: {
+                    pk: todo_id
+                },
+                success: function( data ) {
+                    $('#mark-done-' + todo_id).html(data.button_text);
+                }
+            });
+        }
+
+        function addToDoItem(name) {
+            $.ajax(
+            {
+                url : "{% url 'todos-api-create' %}",
+                type: "POST",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'))
+                },
+                data : {
+                    name: name
+                },
+                success:function(data)
+                {
+                    $("#todo-list").append(
+                            '<li class="todo-item "' + data.is_done +
+                            '><input type="checkbox" id="check-' + data.id +
+                            '" onclick="markDone(' + data.id + ')"' +
+                            data.checked + '><label for="check-' + data.id +
+                            '"> ' + data.name + '</label> ' +
+                            '<a href="/todos/update/' + data.id + '/">edit</a> | ' +
+                            '<a href="/todos/delete/' + data.id + '/">delete</a>' +
+                            '</li>'
+                    );
+                    document.getElementById('id_name').value = '';
+                }
+            });
+        }
+    </script>
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="todo-app">
+        <div>
+            <input id="id_name"
+                   class="todo-input"
+                   type="text"
+                   placeholder="Enter ToDo item"
+                   name="name">
+            <input class="todo-input"
+                   type="submit"
+                   value="Add"
+                   onclick="addToDoItem(document.getElementById('id_name').value)">
+        </div>
+
+        <ul id="todo-list">
+            <label class="todo-label">Todo List</label>
+            {% for todo in object_list %}
+                <li class="todo-item {% if todo.is_done %}todo-done{% endif %}">
+                    <input type="checkbox"
+                           id="check-{{ todo.id }}"
+                           onclick="markDone({{ todo.id }})" {% if todo.is_done %}checked{% endif %}>
+                    <label for="check-{{ todo.id }}">{{ todo.name }}</label>
+                    <a href="{% url 'todos-update' todo.id %}">edit</a> |
+                    <a href="{% url 'todos-delete' todo.id %}">delete</a>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <div id="todo-stats">
+                <a href="{% url 'todos' %}?hide=complete">hide completed</a>
+            <a href="{% url 'todos' %}">show all</a>
+        </div>
+    </div>
+
+{% endblock %}

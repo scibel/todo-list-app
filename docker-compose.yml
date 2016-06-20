@@ -1,0 +1,18 @@
+version: '2'
+services:
+
+  db:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=todoapp
+      - MYSQL_USER=todoapp
+      - MYSQL_PASSWORD=todoapp
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db

@@ -1,0 +1,28 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <title>To Do List</title>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="/static/todos/css/base.css">
+
+        {% block head %}{% endblock %}
+    </head>
+
+    <body>
+
+        {% if not request.user.is_anonymous %}
+            Hello, {{ request.user }}!
+            <a href="{% url 'django.contrib.auth.views.logout' %}">Logout</a>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+
+    </body>
+
+</html>
