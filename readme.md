@@ -1,11 +1,29 @@
-##Origin Coding Challenge
+##Simple To Do App
 
 A simple To Do list implemented in Django and Django Rest Framework.
 
 
+###Summary
+
+This To-do app is build using Django and DRF. Firstly, you need to 
+create a Django User to start creating your To-do list. Follow the
+instructions to create a User.
+
+You can then login and start adding To-do items. You can prioritise
+your items by clicking `edit` and setting the priority. The list will
+sort out accordingly, putting the top priority items first.
+
+You can check the items to mark them as done. There is additional
+`hide completed` filter to remove the done items from the list. 
+You can see all items by clicking the `show all` link.
+
+Finally, install the app by following these simple instructions, enjoy!
+
+
 ###Install
 
-1.	Install Docker Engine and Docker Machine using Docker Toolbox installer, follow instructions [here](https://www.docker.com/products/docker-toolbox).
+1.	Install Docker Engine and Docker Machine using Docker Toolbox 
+    installer, follow instructions [here](https://www.docker.com/products/docker-toolbox).
 
 2.	Create a new Docker VM
 
