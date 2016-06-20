@@ -1,5 +1,5 @@
 """
-WSGI config for origin_coding_challenge project.
+WSGI config for todo-list-app project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
