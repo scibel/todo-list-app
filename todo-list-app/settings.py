@@ -86,7 +86,8 @@ DATABASES = {
         'NAME': 'todoapp',
         'USER': 'todoapp',
         'PASSWORD': 'todoapp',
-        'HOST': 'db',
+        #'HOST': 'db', # Used by Docker
+        'HOST': 'localhost', # Used by Vagrant
         'PORT': '3306',
     }
 }
